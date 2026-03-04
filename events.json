@@ -4,26 +4,30 @@
       "start": "2026-03-03",
       "end": "2026-03-24",
       "color": "#4ea1ff",
-      "game": "hsr"
+      "game": "hsr",
+      "type": "banner"
     },
     {
       "title": "明日方舟 矢量突破#2「巫术之夜」活动关卡第二段开启",
       "start": "2026-03-03",
       "color": "#ff7b7b",
-      "game": "arknights"
+      "game": "arknights",
+      "type": "event"
     },
     {
       "title": "鸣潮 [呜呜企划・推进]限时委托活动",
       "start": "2026-03-05",
       "end": "2026-03-18",
       "color": "#cc66ff",
-      "game": "wuthering"
+      "game": "wuthering",
+      "type": "event"
     },
     {
-      "title": "明日方舟 终末地",
-      "start": "2026-03-05",
-      "end": "2026-03-18",
-      "color": "#cc66ff",
-      "game": "endfield"
+      "title": "明日方舟 终末地 1.1版本",
+      "start": "2026-03-12",
+      "end": "2026-04-12",
+      "color": "#dc2626",
+      "game": "endfield",
+      "type": "version"
     }
   ]

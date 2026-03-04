@@ -45,12 +45,24 @@
     let calendar;
     let allEvents = [];
 
+    const typeColors = {
+      version: "#3b82f6",   // 蓝色
+      banner: "#ef4444",    // 红色
+      event: "#10b981"      // 绿色
+    };
+
     document.addEventListener('DOMContentLoaded', function () {
       var calendarEl = document.getElementById('calendar');
 
       fetch('events.json')
         .then(response => response.json())
         .then(data => {
+
+          // 自动给每个事件加颜色
+          data.forEach(event => {
+            event.color = typeColors[event.type] || "#888888";
+          });
+          
           allEvents = data;
 
           calendar = new FullCalendar.Calendar(calendarEl, {
