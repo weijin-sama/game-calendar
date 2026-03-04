@@ -274,8 +274,10 @@
               document.getElementById("modalTitle").innerText = info.event.title;
               document.getElementById("modalType").innerText = info.event.extendedProps.type;
 
-              const startDate = info.event.start;
-              const endDate = info.event.end;
+              const original = info.event.extendedProps;
+
+              const startDate = new Date(original.start);
+              const endDate = original.end ? new Date(original.end) : null;
 
               document.getElementById("modalStart").innerText =
                 formatDateTimeWithWeek(startDate);
@@ -366,7 +368,7 @@
 
       return `${diffDays}天 ${hoursLeft}小时`;
     }
-    
+
     function getEventStatus(endStr) {
 
       if (!endStr) return "normal";
