@@ -3,7 +3,7 @@
     "title": "崩坏星穹铁道 卡池 火花",
     "start": "2026-03-03",
     "end": "2026-03-24",
-    "color": "#4ea1ff",
+    "color": "#ef4444",
     "game": "hsr",
     "type": "banner",
     "characterImage": "images/火花.jpg"
@@ -11,7 +11,7 @@
   {
     "title": "明日方舟 矢量突破#2「巫术之夜」活动关卡第二段开启",
     "start": "2026-03-03",
-    "color": "#ff7b7b",
+    "color": "#10b981",
     "game": "arknights",
     "type": "event"
   },
@@ -19,7 +19,7 @@
     "title": "鸣潮 [呜呜企划・推进]限时委托活动",
     "start": "2026-03-05",
     "end": "2026-03-18",
-    "color": "#cc66ff",
+    "color": "#10b981",
     "game": "wuthering",
     "type": "event"
   },
@@ -27,7 +27,7 @@
     "title": "明日方舟 终末地 1.1版本",
     "start": "2026-03-12",
     "end": "2026-04-12",
-    "color": "#dc2626",
+    "color": "#3b82f6",
     "game": "endfield",
     "type": "version"
   }
