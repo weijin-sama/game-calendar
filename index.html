@@ -61,16 +61,6 @@
       color: red;
     }
 
-    #modalLink {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 6px 12px;
-      background: #3b82f6;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-    }
-
     #modalLink:hover {
       background: #2563eb;
     }
@@ -189,6 +179,12 @@
 
           calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            displayEventTime: true,
+            eventTimeFormat: {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            },
             events: processedEvents,
 
             eventContent: function (arg) {
@@ -207,18 +203,29 @@
               const container = document.createElement("div");
               container.style.display = "flex";
               container.style.alignItems = "center";
+              container.style.fontSize = "12px";
 
+              // 游戏图标
               if (iconUrl) {
                 const img = document.createElement("img");
                 img.src = iconUrl;
                 img.style.width = "16px";
                 img.style.height = "16px";
                 img.style.marginRight = "4px";
+                img.style.borderRadius = "4px";
                 container.appendChild(img);
               }
 
+              // 只写类型
               const text = document.createElement("span");
-              text.innerText = arg.event.title;
+
+              const typeMap = {
+                banner: "卡池",
+                event: "活动",
+                version: "版本"
+              };
+
+              text.innerText = typeMap[arg.event.extendedProps.type] || "";
               container.appendChild(text);
 
               return { domNodes: [container] };
@@ -231,33 +238,22 @@
 
               document.getElementById("modalTitle").innerText = info.event.title;
               document.getElementById("modalType").innerText = info.event.extendedProps.type;
+
               const original = info.event.extendedProps;
 
               document.getElementById("modalStart").innerText =
-                formatDateWithWeek(original.start);
+                formatDateTimeWithWeek(original.start);
 
               document.getElementById("modalEnd").innerText =
                 original.end
-                  ? formatDateWithWeek(original.end)
+                  ? formatDateTimeWithWeek(original.end)
                   : "单日事件";
 
               document.getElementById("modalDescription").innerText =
-                (original.description || "无说明") +
-                "\n\n剩余时间：" +
-                getRemainingDays(original.end);
-
-              document.getElementById("modalDescription").innerText =
-                info.event.extendedProps.description || "无说明";
+                "剩余时间：" + getRemainingTime(original.end);
 
               const link = document.getElementById("modalLink");
-              const url = info.event.extendedProps.url;
-
-              if (url) {
-                link.href = url;
-                link.style.display = "inline-block";
-              } else {
-                link.style.display = "none";
-              }
+              
 
               // 游戏图标映射
               const gameIcons = {
@@ -303,18 +299,34 @@
       }
     };
 
-    function formatDateWithWeek(dateStr) {
+    function formatDateTimeWithWeek(dateStr) {
       const date = new Date(dateStr);
       const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
-      return dateStr + " (周" + weekdays[date.getDay()] + ")";
+
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hour = String(date.getHours()).padStart(2, "0");
+      const minute = String(date.getMinutes()).padStart(2, "0");
+
+      return `${year}-${month}-${day} ${hour}:${minute} (周${weekdays[date.getDay()]})`;
     }
 
-    function getRemainingDays(endStr) {
+    function getRemainingTime(endStr) {
       if (!endStr) return "无结束时间";
-      const today = new Date();
+
+      const now = new Date();
       const end = new Date(endStr);
-      const diff = Math.ceil((end - today) / (1000 * 60 * 60 * 24));
-      return diff >= 0 ? diff + " 天" : "已结束";
+
+      const diffMs = end - now;
+
+      if (diffMs <= 0) return "已结束";
+
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      const diffDays = Math.floor(diffHours / 24);
+      const hoursLeft = diffHours % 24;
+
+      return `${diffDays}天 ${hoursLeft}小时`;
     }
   </script>
 
