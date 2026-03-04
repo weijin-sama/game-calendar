@@ -93,12 +93,19 @@
 <div id="modal" class="modal">
   <div class="modal-content">
     <span id="closeBtn" class="close">&times;</span>
-    <h2 id="modalTitle"></h2>
+
+    <img id="gameIcon" style="width:40px; vertical-align:middle; margin-right:8px;">
+    <h2 id="modalTitle" style="display:inline;"></h2>
+
+    <br><br>
+
+    <img id="characterImage" style="width:100%; border-radius:10px; margin-bottom:10px; display:none;">
+
     <p><strong>类型：</strong><span id="modalType"></span></p>
     <p><strong>开始时间：</strong><span id="modalStart"></span></p>
     <p><strong>结束时间：</strong><span id="modalEnd"></span></p>
     <p id="modalDescription"></p>
-    <a id="modalLink" href="#" target="_blank">查看官网</a>
+    <a id="modalLink" target="_blank">查看官网</a>
   </div>
 </div>
 
@@ -164,6 +171,29 @@
                 link.style.display = "inline-block";
               } else {
                 link.style.display = "none";
+              }
+
+              // 游戏图标映射
+              const gameIcons = {
+                hsr: "images/hsr.png",
+                arknights: "images/arknights.png",
+                wuthering: "images/wuthering.png",
+                endfield: "images/endfield.png"
+              };
+
+              // 设置游戏图标
+              const game = info.event.extendedProps.game;
+              const icon = document.getElementById("gameIcon");
+              icon.src = gameIcons[game] || "";
+
+              const charImg = document.getElementById("characterImage");
+              const characterImage = info.event.extendedProps.characterImage;
+
+              if (characterImage) {
+                charImg.src = characterImage;
+                charImg.style.display = "block";
+              } else {
+                charImg.style.display = "none";
               }
 
               modal.style.display = "block";
