@@ -137,27 +137,49 @@
 
             // 1️⃣ 卡池 —— 保持连续
             if (event.type === "banner") {
-              event.color = baseColor;
+
+              const status = getEventStatus(event.end);
+
+              let color = baseColor;
+
+              if (status === "ended") {
+                color = "#9ca3af"; // 灰色
+              }
+              else if (status === "endingSoon") {
+                color = "#f59e0b"; // 橙色
+              }
+
+              event.color = color;
               processedEvents.push(event);
             }
 
             // 2️⃣ 活动 —— 开始 + 结束 两个点
             else if (event.type === "event") {
 
+              const status = getEventStatus(event.end);
+
+              let color = baseColor;
+
+              if (status === "ended") {
+                color = "#9ca3af";
+              }
+              else if (status === "endingSoon") {
+                color = "#f59e0b";
+              }
+
               // 开始标记
               processedEvents.push({
-                title: "🟢 " + event.title + " 开始",
+                title: event.title,
                 start: event.start,
-                color: baseColor,
+                color: color,
                 extendedProps: event
               });
 
-              // 如果有结束日期
               if (event.end) {
                 processedEvents.push({
-                  title: "🔴 " + event.title + " 结束",
+                  title: event.title,
                   start: event.end,
-                  color: baseColor,
+                  color: color,
                   extendedProps: event
                 });
               }
@@ -165,8 +187,9 @@
 
             // 3️⃣ 新版本 —— 只显示开始
             else if (event.type === "version") {
+
               processedEvents.push({
-                title: "🆕 " + event.title,
+                title: event.title,
                 start: event.start,
                 color: baseColor,
                 extendedProps: event
@@ -225,7 +248,19 @@
                 version: "版本"
               };
 
-              text.innerText = typeMap[arg.event.extendedProps.type] || "";
+              const status = getEventStatus(arg.event.extendedProps.end);
+
+              let label = typeMap[arg.event.extendedProps.type] || "";
+
+              if (status === "endingSoon") {
+                label = "⚠ " + label;
+              }
+
+              if (status === "ended") {
+                label = "✔ " + label;
+              }
+
+              text.innerText = label;
               container.appendChild(text);
 
               return { domNodes: [container] };
@@ -253,7 +288,7 @@
                 "剩余时间：" + getRemainingTime(original.end);
 
               const link = document.getElementById("modalLink");
-              
+
 
               // 游戏图标映射
               const gameIcons = {
@@ -327,6 +362,20 @@
       const hoursLeft = diffHours % 24;
 
       return `${diffDays}天 ${hoursLeft}小时`;
+    }
+    function getEventStatus(endStr) {
+
+      if (!endStr) return "normal";
+
+      const now = new Date();
+      const end = new Date(endStr);
+      const diff = end - now;
+
+      if (diff <= 0) return "ended";
+
+      if (diff <= 24 * 60 * 60 * 1000) return "endingSoon";
+
+      return "normal";
     }
   </script>
 
