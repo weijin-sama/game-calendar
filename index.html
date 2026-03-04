@@ -31,26 +31,46 @@
 <body>
 
   <h1>二游版本时间日历</h1>
+  <div style="text-align:center; margin-bottom:20px;">
+    <button onclick="filterGame('all')">全部</button>
+    <button onclick="filterGame('hsr')">星穹铁道</button>
+    <button onclick="filterGame('arknights')">明日方舟</button>
+    <button onclick="filterGame('wuthering')">鸣潮</button>
+  </div>
+
   <div id="calendar"></div>
 
   <script>
+    let calendar;
+    let allEvents = [];
+
     document.addEventListener('DOMContentLoaded', function () {
       var calendarEl = document.getElementById('calendar');
 
       fetch('events.json')
         .then(response => response.json())
         .then(data => {
-          var calendar = new FullCalendar.Calendar(calendarEl, {
+          allEvents = data;
+
+          calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            events: data
+            events: allEvents
           });
 
           calendar.render();
-        })
-        .catch(error => {
-          console.error("加载事件失败:", error);
         });
     });
+
+    function filterGame(game) {
+      if (game === 'all') {
+        calendar.removeAllEvents();
+        calendar.addEventSource(allEvents);
+      } else {
+        const filtered = allEvents.filter(event => event.game === game);
+        calendar.removeAllEvents();
+        calendar.addEventSource(filtered);
+      }
+    }
   </script>
 
 </body>
