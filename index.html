@@ -76,36 +76,6 @@
         transform: scale(1);
       }
     }
-
-    /* 卡池 */
-    .banner-event {
-      font-weight: 600;
-      border-radius: 6px !important;
-    }
-
-    /* 活动 */
-    .event-event {
-      opacity: 0.9;
-      border-radius: 6px !important;
-    }
-
-    /* 版本 */
-    .version-event {
-      border-left: 4px solid #9333ea !important;
-      border-radius: 6px !important;
-    }
-
-    /* 已结束 */
-    .ended-event {
-      opacity: 0.4 !important;
-      background-color: #9ca3af !important;
-    }
-
-    /* 即将结束 */
-    .ending-soon-event {
-      border: 2px solid #f59e0b !important;
-      box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
-    }
   </style>
 </head>
 
@@ -180,11 +150,7 @@
               }
 
               event.color = color;
-              processedEvents.push({
-                ...event,
-                color: color,
-                classNames: ["banner-event", statusClass],
-              });
+              processedEvents.push(event);
             }
 
             // 2️⃣ 活动 —— 开始 + 结束 两个点
@@ -206,7 +172,6 @@
                 title: event.title,
                 start: event.start,
                 color: color,
-                classNames: ["event-event"],
                 extendedProps: event
               });
 
@@ -215,7 +180,6 @@
                   title: event.title,
                   start: event.end,
                   color: color,
-                  classNames: ["event-event"],
                   extendedProps: event
                 });
               }
@@ -228,7 +192,6 @@
                 title: event.title,
                 start: event.start,
                 color: baseColor,
-                classNames: ["version-event"],
                 extendedProps: event
               });
             }
@@ -287,16 +250,17 @@
 
               const status = getEventStatus(arg.event.extendedProps.end);
 
-              let statusClass = "";
+              let label = typeMap[arg.event.extendedProps.type] || "";
+
+              if (status === "endingSoon") {
+                label = "⚠ " + label;
+              }
 
               if (status === "ended") {
-                statusClass = "ended-event";
-              }
-              else if (status === "endingSoon") {
-                statusClass = "ending-soon-event";
+                label = "✔ " + label;
               }
 
-
+              text.innerText = label;
               container.appendChild(text);
 
               return { domNodes: [container] };
