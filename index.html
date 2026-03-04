@@ -149,6 +149,39 @@
             initialView: 'dayGridMonth',
             events: allEvents,
 
+            eventContent: function (arg) {
+
+              const game = arg.event.extendedProps.game;
+
+              const gameIcons = {
+                hsr: "images/hsr.png",
+                arknights: "images/arknights.png",
+                wuthering: "images/wuthering.png",
+                endfield: "images/endfield.png"
+              };
+
+              const iconUrl = gameIcons[game] || "";
+
+              const container = document.createElement("div");
+              container.style.display = "flex";
+              container.style.alignItems = "center";
+
+              if (iconUrl) {
+                const img = document.createElement("img");
+                img.src = iconUrl;
+                img.style.width = "16px";
+                img.style.height = "16px";
+                img.style.marginRight = "4px";
+                container.appendChild(img);
+              }
+
+              const text = document.createElement("span");
+              text.innerText = arg.event.title;
+              container.appendChild(text);
+
+              return { domNodes: [container] };
+            },
+
             // 👇 关键：点击事件
             eventClick: function (info) {
 
