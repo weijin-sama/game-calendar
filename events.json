@@ -18,7 +18,6 @@
   {
     "title": "鸣潮 [呜呜企划・推进]限时委托活动",
     "start": "2026-03-05",
-    "end": "2026-03-18",
     "color": "#10b981",
     "game": "wuthering",
     "type": "event"
@@ -26,7 +25,6 @@
   {
     "title": "明日方舟 终末地 1.1版本",
     "start": "2026-03-12",
-    "end": "2026-04-12",
     "color": "#3b82f6",
     "game": "endfield",
     "type": "version"
