@@ -269,26 +269,16 @@
             // 👇 关键：点击事件
             eventClick: function (info) {
 
-              let startDate;
-              let endDate;
+              const modal = document.getElementById("modal");
 
-              // 如果是连续事件（如卡池）
-              if (info.event.start && info.event.end) {
-                startDate = info.event.start;
-                endDate = info.event.end;
-              }
+              document.getElementById("modalTitle").innerText = info.event.title;
+              document.getElementById("modalType").innerText = info.event.extendedProps.type;
 
-              // 如果是拆分后的单日事件（如活动）
-              else {
-                const original = info.event.extendedProps;
-                startDate = original.start ? new Date(original.start) : null;
-                endDate = original.end ? new Date(original.end) : null;
-              }
+              const startDate = info.event.start;
+              const endDate = info.event.end;
 
               document.getElementById("modalStart").innerText =
-                startDate
-                  ? formatDateTimeWithWeek(startDate)
-                  : "无时间";
+                formatDateTimeWithWeek(startDate);
 
               document.getElementById("modalEnd").innerText =
                 endDate
@@ -376,7 +366,6 @@
 
       return `${diffDays}天 ${hoursLeft}小时`;
     }
-
     function getEventStatus(endStr) {
 
       if (!endStr) return "normal";
