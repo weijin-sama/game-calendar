@@ -274,18 +274,19 @@
               document.getElementById("modalTitle").innerText = info.event.title;
               document.getElementById("modalType").innerText = info.event.extendedProps.type;
 
-              const original = info.event.extendedProps;
+              const startDate = info.event.start;
+              const endDate = info.event.end;
 
               document.getElementById("modalStart").innerText =
-                formatDateTimeWithWeek(original.start);
+                formatDateTimeWithWeek(startDate);
 
               document.getElementById("modalEnd").innerText =
-                original.end
-                  ? formatDateTimeWithWeek(original.end)
+                endDate
+                  ? formatDateTimeWithWeek(endDate)
                   : "单日事件";
 
               document.getElementById("modalDescription").innerText =
-                "剩余时间：" + getRemainingTime(original.end);
+                "剩余时间：" + getRemainingTime(endDate);
 
               const link = document.getElementById("modalLink");
 
@@ -334,8 +335,11 @@
       }
     };
 
-    function formatDateTimeWithWeek(dateStr) {
-      const date = new Date(dateStr);
+    function formatDateTimeWithWeek(dateObj) {
+
+      if (!dateObj) return "无时间";
+
+      const date = new Date(dateObj);
       const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
 
       const year = date.getFullYear();
@@ -347,13 +351,12 @@
       return `${year}-${month}-${day} ${hour}:${minute} (周${weekdays[date.getDay()]})`;
     }
 
-    function getRemainingTime(endStr) {
-      if (!endStr) return "无结束时间";
+    function getRemainingTime(endDate) {
+
+      if (!endDate) return "无结束时间";
 
       const now = new Date();
-      const end = new Date(endStr);
-
-      const diffMs = end - now;
+      const diffMs = endDate - now;
 
       if (diffMs <= 0) return "已结束";
 
@@ -363,6 +366,7 @@
 
       return `${diffDays}天 ${hoursLeft}小时`;
     }
+    
     function getEventStatus(endStr) {
 
       if (!endStr) return "normal";
