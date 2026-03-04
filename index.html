@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>二游版本时间日历</title>
@@ -46,9 +47,9 @@
     let allEvents = [];
 
     const typeColors = {
-      version: "#3b82f6",   // 蓝色
-      banner: "#ef4444",    // 红色
-      event: "#10b981"      // 绿色
+      version: "#3b82f6",
+      banner: "#ef4444",
+      event: "#10b981"
     };
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -58,33 +59,44 @@
         .then(response => response.json())
         .then(data => {
 
-          // 自动给每个事件加颜色
           data.forEach(event => {
             event.color = typeColors[event.type] || "#888888";
           });
-          
+
           allEvents = data;
 
           calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            events: allEvents
+            events: allEvents,
+
+            // 👇 关键：点击事件
+            eventClick: function (info) {
+
+              let title = info.event.title;
+              let start = info.event.startStr;
+              let end = info.event.endStr || "单日事件";
+              let description = info.event.extendedProps.description || "无说明";
+              let url = info.event.extendedProps.url || "";
+
+              alert(
+                "📌 " + title + "\n\n" +
+                "开始时间: " + start + "\n" +
+                "结束时间: " + end + "\n\n" +
+                description
+              );
+
+              if (url) {
+                window.open(url, "_blank");
+              }
+            }
+
           });
 
           calendar.render();
         });
     });
-
-    function filterGame(game) {
-      if (game === 'all') {
-        calendar.removeAllEvents();
-        calendar.addEventSource(allEvents);
-      } else {
-        const filtered = allEvents.filter(event => event.game === game);
-        calendar.removeAllEvents();
-        calendar.addEventSource(filtered);
-      }
-    }
   </script>
 
 </body>
+
 </html>

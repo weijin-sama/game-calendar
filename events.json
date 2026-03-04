@@ -5,14 +5,18 @@
       "end": "2026-03-24",
       "color": "#4ea1ff",
       "game": "hsr",
-      "type": "banner"
+      "type": "banner",
+      "description": "新主线剧情 + 新地图开放",
+      "url": "https://hsr.hoyoverse.com"
     },
     {
       "title": "明日方舟 矢量突破#2「巫术之夜」活动关卡第二段开启",
       "start": "2026-03-03",
       "color": "#ff7b7b",
       "game": "arknights",
-      "type": "event"
+      "type": "event",
+      "description": "新主线剧情 + 新地图开放",
+      "url": "https://hsr.hoyoverse.com"
     },
     {
       "title": "鸣潮 [呜呜企划・推进]限时委托活动",
@@ -20,7 +24,9 @@
       "end": "2026-03-18",
       "color": "#cc66ff",
       "game": "wuthering",
-      "type": "event"
+      "type": "event",
+      "description": "新主线剧情 + 新地图开放",
+      "url": "https://hsr.hoyoverse.com"
     },
     {
       "title": "明日方舟 终末地 1.1版本",
@@ -28,6 +34,8 @@
       "end": "2026-04-12",
       "color": "#dc2626",
       "game": "endfield",
-      "type": "version"
+      "type": "version",
+      "description": "新主线剧情 + 新地图开放",
+      "url": "https://hsr.hoyoverse.com"
     }
   ]
