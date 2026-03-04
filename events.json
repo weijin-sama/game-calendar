@@ -9,8 +9,9 @@
     "characterImage": "images/火花.jpg"
   },
   {
-    "title": "明日方舟 矢量突破#2「巫术之夜」活动关卡第二段开启",
-    "start": "2026-03-03",
+    "title": "明日方舟 矢量突破#2「巫术之夜」活动",
+    "start": "2026-02-24",
+    "end": "2026-03-17",
     "color": "#10b981",
     "game": "arknights",
     "type": "event"
@@ -18,9 +19,19 @@
   {
     "title": "鸣潮 [呜呜企划・推进]限时委托活动",
     "start": "2026-03-05",
+    "end": "2026-03-18",
     "color": "#10b981",
     "game": "wuthering",
     "type": "event"
+  },
+  {
+    "title": "鸣潮 卡池 陆・赫斯",
+    "start": "2026-02-26",
+    "end": "2026-03-18",
+    "color": "#ef4444",
+    "game": "wuthering",
+    "type": "banner",
+    "characterImage": "images/陆.jpg"
   },
   {
     "title": "明日方舟 终末地 1.1版本",
