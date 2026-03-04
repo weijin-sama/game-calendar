@@ -26,8 +26,81 @@
       padding: 20px;
       border-radius: 10px;
     }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background: white;
+      width: 400px;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: red;
+    }
+
+    #modalLink {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    #modalLink:hover {
+      background: #2563eb;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
+
+<!-- 自定义弹窗 -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span id="closeBtn" class="close">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p><strong>类型：</strong><span id="modalType"></span></p>
+    <p><strong>开始时间：</strong><span id="modalStart"></span></p>
+    <p><strong>结束时间：</strong><span id="modalEnd"></span></p>
+    <p id="modalDescription"></p>
+    <a id="modalLink" href="#" target="_blank">查看官网</a>
+  </div>
+</div>
 
 <body>
 
@@ -72,22 +145,28 @@
             // 👇 关键：点击事件
             eventClick: function (info) {
 
-              let title = info.event.title;
-              let start = info.event.startStr;
-              let end = info.event.endStr || "单日事件";
-              let description = info.event.extendedProps.description || "无说明";
-              let url = info.event.extendedProps.url || "";
+              const modal = document.getElementById("modal");
 
-              alert(
-                "📌 " + title + "\n\n" +
-                "开始时间: " + start + "\n" +
-                "结束时间: " + end + "\n\n" +
-                description
-              );
+              document.getElementById("modalTitle").innerText = info.event.title;
+              document.getElementById("modalType").innerText = info.event.extendedProps.type;
+              document.getElementById("modalStart").innerText = info.event.startStr;
+              document.getElementById("modalEnd").innerText =
+                info.event.endStr || "单日事件";
+
+              document.getElementById("modalDescription").innerText =
+                info.event.extendedProps.description || "无说明";
+
+              const link = document.getElementById("modalLink");
+              const url = info.event.extendedProps.url;
 
               if (url) {
-                window.open(url, "_blank");
+                link.href = url;
+                link.style.display = "inline-block";
+              } else {
+                link.style.display = "none";
               }
+
+              modal.style.display = "block";
             }
 
           });
@@ -95,6 +174,18 @@
           calendar.render();
         });
     });
+    // 点击关闭按钮
+    document.getElementById("closeBtn").onclick = function () {
+      document.getElementById("modal").style.display = "none";
+    };
+
+    // 点击外面关闭
+    window.onclick = function (event) {
+      const modal = document.getElementById("modal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
   </script>
 
 </body>
